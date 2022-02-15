@@ -1,0 +1,20 @@
+add_action('frm_after_create_entry', 'frm_update_entry_in_other_form', 30, 2);
+function frm_update_entry_in_other_form($entry_id, $form_id){
+	if ( $form_id !== in_array( array('5','92') ) ){//Change 997 to the ID of your update form
+		return;
+	}
+
+	$entry_id = $_POST['item_meta'][249]; //change 9353 to the ID of the field in your update form that has the entry id
+	$field_id = 930; // change 9352 to the ID of the field in your main form that's to be updated
+	$new_value = 'Completed';// change 'Approved' to the value you want to set the field in your main form
+	
+	$entry_id = $_POST['item_meta'][4656]; //change 9353 to the ID of the field in your update form that has the entry id
+	$field_id = 930; // change 9352 to the ID of the field in your main form that's to be updated
+	$new_value = 'Completed';// change 'Approved' to the value you want to set the field in your main form
+	
+	$added = FrmEntryMeta::add_entry_meta( $entry_id, $field_id, null, $new_value );
+	if ( ! $added ) {
+		FrmEntryMeta::update_entry_meta( $entry_id, $field_id, null, $new_value );
+	}
+	
+}
